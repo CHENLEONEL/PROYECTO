@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styleformulario.css">
+  <title>Calculadora de Tarifa</title>
+  <style>
+
+  </style>
+</head>
+<body>
+
+  <h2 id="divcontenedor" class="divA" >HOTEL PUERTO BARRIOS</h2>
+
+  <label for="habitacion" class="divinput">Seleccione el tipo de habitación:</label>
+  <select id="habitacion"  class="select">
+    <option value="clasica">Clasica - Q150.00</option>
+    <option value="doble">Doble - Q275.00</option>
+    <option value="suite">Suite - Q450.00</option>
+  </select>
+<br>
+  <label for="personas" class="divinput">Cantidad de personas adicionales:</label>
+  <input type="number" id="personas" value="0" min="0" class="select">
+
+  <br>
+
+  <button onclick="calcularTarifa()" class="divinput3">Calcular Tarifa</button>
+
+  <br><br>
+
+  <div id="resultados" style="display: none;" class="divinput4">
+    <h3>Resultados</h3>
+    <p id="subtotal">Subtotal: Q0.00</p>
+    <p id="iva">IVA (12%): Q0.00</p>
+    <p id="inguat">INGUAT (10%): Q0.00</p>
+    <p id="total">Total: Q0.00</p>
+
+    <br>
+
+    <label for="tipoPago" class="divinput">Seleccione el tipo de pago:</label>
+    <select id="tipoPago" class="select">
+      <option value="efectivo">Efectivo</option>
+      <option value="tarjeta">Tarjeta</option>
+    </select>
+
+    <br><br>
+
+    <div id="campoTarjeta" style="display: none;">
+      <label for="numeroTarjeta" class="divinput">Número de tarjeta (10 dígitos):</label>
+      <input type="text" id="numeroTarjeta" maxlength="10">
+    </div>
+
+    <br><br>
+
+    <button onclick="procesoTerminado()" CLASS="divinput3">PAGAR</button>
+  </div>
+
+  <script>
+    function calcularTarifa() {
+      var habitacion = document.getElementById("habitacion").value;
+      var personas = parseInt(document.getElementById("personas").value);
+
+      var costoHabitacion = 0;
+
+      switch (habitacion) {
+        case "clasica":
+          costoHabitacion = 150;
+          break;
+        case "doble":
+          costoHabitacion = 275;
+          break;
+        case "suite":
+          costoHabitacion = 450;
+          break;
+      }
+
+      var costoPersonasAdicionales = 90 * personas;
+
+      var subtotal = costoHabitacion + costoPersonasAdicionales;
+      var iva = 0.12 * subtotal;
+      var inguat = 0.10 * subtotal;
+      var total = subtotal + iva + inguat;
+
+      document.getElementById("subtotal").innerText = "Subtotal: Q" + subtotal.toFixed(2);
+      document.getElementById("iva").innerText = "IVA (12%): Q" + iva.toFixed(2);
+      document.getElementById("inguat").innerText = "INGUAT (10%): Q" + inguat.toFixed(2);
+      document.getElementById("total").innerText = "Total: Q" + total.toFixed(2);
+
+      document.getElementById("resultados").style.display = "block";
+    }
+
+    function procesoTerminado() {
+      alert("Proceso Terminado");
+    }
+
+    document.getElementById("tipoPago").addEventListener("change", function () {
+      var campoTarjeta = document.getElementById("campoTarjeta");
+      if (this.value === "tarjeta") {
+        campoTarjeta.style.display = "block";
+      } else {
+        campoTarjeta.style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+</html>
